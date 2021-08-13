@@ -109,6 +109,13 @@ namespace RhythmsGonnaGetYou
                     Console.WriteLine("Viewing all signed bands");
                     Console.WriteLine();
 
+                    var signedBands = context.Band.Where(Band => Band.IsSigned == true);
+                    foreach (var band in signedBands)
+                    {
+                        Console.WriteLine($"{band.Name} is a signed band");
+                    }
+
+
                 }
                 else
                 if (choice == "10")
@@ -116,6 +123,12 @@ namespace RhythmsGonnaGetYou
                     Console.WriteLine();
                     Console.WriteLine("Viewing all unsigned bands");
                     Console.WriteLine();
+
+                    var signedBands = context.Band.Where(Band => Band.IsSigned == false);
+                    foreach (var band in signedBands)
+                    {
+                        Console.WriteLine($"{band.Name} is an unsigned band");
+                    }
 
                 }
                 else
