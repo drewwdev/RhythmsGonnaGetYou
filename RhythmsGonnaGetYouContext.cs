@@ -11,9 +11,9 @@ namespace RhythmsGonnaGetYou
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("server=localhost;database=SuncoastMovies");
-            var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
-            optionsBuilder.UseLoggerFactory(loggerFactory);
+            optionsBuilder.UseNpgsql("server=localhost;database=RecordCompany");
+            //var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+            //optionsBuilder.UseLoggerFactory(loggerFactory);
         }
     }
 }

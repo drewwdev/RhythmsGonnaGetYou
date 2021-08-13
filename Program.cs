@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace RhythmsGonnaGetYou
@@ -8,10 +9,8 @@ namespace RhythmsGonnaGetYou
         static void Main(string[] args)
         {
             var context = new RhythmsGonnaGetYouContext();
-            var AlbumsWithBands = context.Album.Include(Album => Album.Band);
 
             var keepGoing = true;
-
             while (keepGoing)
             {
                 Console.WriteLine();
@@ -40,6 +39,13 @@ namespace RhythmsGonnaGetYou
                 {
                     Console.WriteLine();
                     Console.WriteLine("Viewing all the bands");
+                    Console.WriteLine();
+
+                    var bandNames = context.Band.Include(Band => Band.Albums);
+                    foreach (var band in bandNames)
+                    {
+                        Console.WriteLine($"There is a band named {band.Name}");
+                    }
 
                 }
                 else
