@@ -32,6 +32,7 @@ namespace RhythmsGonnaGetYou
                 {
                     Console.WriteLine();
                     Console.WriteLine("Adding a new band");
+                    Console.WriteLine();
 
                 }
                 else
@@ -53,6 +54,7 @@ namespace RhythmsGonnaGetYou
                 {
                     Console.WriteLine();
                     Console.WriteLine("Adding an album for a band");
+                    Console.WriteLine();
 
                 }
                 else
@@ -60,6 +62,7 @@ namespace RhythmsGonnaGetYou
                 {
                     Console.WriteLine();
                     Console.WriteLine("Adding a song to an album");
+                    Console.WriteLine();
 
                 }
                 else
@@ -67,6 +70,7 @@ namespace RhythmsGonnaGetYou
                 {
                     Console.WriteLine();
                     Console.WriteLine("Letting a band go");
+                    Console.WriteLine();
 
                 }
                 else
@@ -74,6 +78,7 @@ namespace RhythmsGonnaGetYou
                 {
                     Console.WriteLine();
                     Console.WriteLine("Signing a band");
+                    Console.WriteLine();
 
                 }
                 else
@@ -81,6 +86,7 @@ namespace RhythmsGonnaGetYou
                 {
                     Console.WriteLine();
                     Console.WriteLine("Viewing a bands albums");
+                    Console.WriteLine();
 
                 }
                 else
@@ -88,13 +94,20 @@ namespace RhythmsGonnaGetYou
                 {
                     Console.WriteLine();
                     Console.WriteLine("Viewing all albums by release date");
+                    Console.WriteLine();
 
+                    var albumsByReleaseDate = context.Album.OrderBy(Band => Band.ReleaseDate);
+                    foreach (var album in albumsByReleaseDate)
+                    {
+                        Console.WriteLine($"{album.Title} was released on {album.ReleaseDate.ToString("MM/dd/yyyy")}");
+                    }
                 }
                 else
                 if (choice == "9")
                 {
                     Console.WriteLine();
                     Console.WriteLine("Viewing all signed bands");
+                    Console.WriteLine();
 
                 }
                 else
@@ -102,6 +115,7 @@ namespace RhythmsGonnaGetYou
                 {
                     Console.WriteLine();
                     Console.WriteLine("Viewing all unsigned bands");
+                    Console.WriteLine();
 
                 }
                 else
@@ -115,6 +129,7 @@ namespace RhythmsGonnaGetYou
                 {
                     Console.WriteLine();
                     Console.WriteLine("Invalid input");
+                    Console.WriteLine();
                 }
             }
         }
