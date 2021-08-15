@@ -172,9 +172,18 @@ namespace RhythmsGonnaGetYou
                 else
                 if (choice == "7")
                 {
+
                     Console.WriteLine();
                     Console.WriteLine("Viewing a bands albums");
                     Console.WriteLine();
+
+                    var whatBand = PromptForString("What band would you like to see albums from? ");
+                    var albumsFromBand = context.Band.FirstOrDefault(band => band.Name == whatBand);
+                    var albumName = context.Album.Include(album => album.Band).Where(album => album.Band == albumsFromBand);
+                    foreach (var album in albumName)
+                    {
+                        Console.WriteLine(album.Title);
+                    }
 
                 }
                 else
@@ -184,7 +193,7 @@ namespace RhythmsGonnaGetYou
                     Console.WriteLine("Viewing all albums by release date");
                     Console.WriteLine();
 
-                    var albumsByReleaseDate = context.Album.OrderBy(Band => Band.ReleaseDate);
+                    var albumsByReleaseDate = context.Album.OrderBy(Album => Album.ReleaseDate);
                     foreach (var album in albumsByReleaseDate)
                     {
                         Console.WriteLine($"{album.Title} was released on {album.ReleaseDate.ToString("MM/dd/yyyy")}");
@@ -210,8 +219,8 @@ namespace RhythmsGonnaGetYou
                     Console.WriteLine("Viewing all unsigned bands");
                     Console.WriteLine();
 
-                    var signedBands = context.Band.Where(Band => Band.IsSigned == false);
-                    foreach (var band in signedBands)
+                    var unsignedBands = context.Band.Where(Band => Band.IsSigned == false);
+                    foreach (var band in unsignedBands)
                     {
                         Console.WriteLine($"{band.Name} is an unsigned band");
                     }
