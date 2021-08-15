@@ -105,7 +105,6 @@ namespace RhythmsGonnaGetYou
 
                     context.Band.Add(newBand);
                     context.SaveChanges();
-
                 }
                 else
                 if (choice == "2")
@@ -136,7 +135,6 @@ namespace RhythmsGonnaGetYou
 
                     context.Album.Add(newAlbum);
                     context.SaveChanges();
-
                 }
                 else
                 if (choice == "4")
@@ -145,6 +143,15 @@ namespace RhythmsGonnaGetYou
                     Console.WriteLine("Adding a song to an album");
                     Console.WriteLine();
 
+                    var newSong = new Song();
+
+                    newSong.Title = PromptForString("What is the title of the song? ");
+                    newSong.TrackNumber = PromptForInteger("What is the track number of that song? ");
+                    newSong.Duration = PromptForString("What is the duration of that song? Format: mm:ss ");
+                    newSong.AlbumId = PromptForInteger("What is the album Id associated with that song? ");
+
+                    context.Song.Add(newSong);
+                    context.SaveChanges();
                 }
                 else
                 if (choice == "5")
