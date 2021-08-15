@@ -6,6 +6,23 @@ namespace RhythmsGonnaGetYou
 {
     class Program
     {
+        static DateTime PromptForDateTime(string prompt)
+        {
+            Console.Write(prompt);
+            DateTime userInput;
+            var isThisGoodInput = DateTime.TryParse(Console.ReadLine(), out userInput);
+
+            if (isThisGoodInput)
+            {
+                return userInput;
+            }
+            else
+            {
+                Console.WriteLine("Sorry, that was not valid. I'm going to use a default date as your date.");
+                return default(DateTime);
+            }
+        }
+
         static bool PromptForBool(string prompt)
         {
             Console.Write(prompt);
@@ -109,6 +126,16 @@ namespace RhythmsGonnaGetYou
                     Console.WriteLine();
                     Console.WriteLine("Adding an album for a band");
                     Console.WriteLine();
+
+                    var newAlbum = new Album();
+
+                    newAlbum.Title = PromptForString("What is the name of the album? ");
+                    newAlbum.IsExplicit = PromptForBool("Is the album explicit? True or False ");
+                    newAlbum.ReleaseDate = PromptForDateTime("When was that album released? Format: yyyy-mm-dd ");
+                    newAlbum.BandId = PromptForInteger("What is the band Id associated with this album? ");
+
+                    context.Album.Add(newAlbum);
+                    context.SaveChanges();
 
                 }
                 else
