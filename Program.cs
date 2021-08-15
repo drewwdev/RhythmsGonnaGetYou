@@ -176,6 +176,7 @@ namespace RhythmsGonnaGetYou
                             var whatBand = Console.ReadLine();
                             var letGoOfBand = context.Band.FirstOrDefault(band => band.Name == whatBand);
                             letGoOfBand.IsSigned = false;
+
                             context.SaveChanges();
                             break;
                         }
@@ -190,6 +191,7 @@ namespace RhythmsGonnaGetYou
                             var whatBand = Console.ReadLine();
                             var signBand = context.Band.FirstOrDefault(band => band.Name == whatBand);
                             signBand.IsSigned = true;
+
                             context.SaveChanges();
                             break;
                         }
