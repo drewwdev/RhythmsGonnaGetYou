@@ -160,6 +160,12 @@ namespace RhythmsGonnaGetYou
                     Console.WriteLine("Letting a band go");
                     Console.WriteLine();
 
+                    Console.WriteLine("What band would you like to let go? ");
+                    var whatBand = Console.ReadLine();
+                    var letGoOfBand = context.Band.FirstOrDefault(band => band.Name == whatBand);
+                    letGoOfBand.IsSigned = false;
+                    context.SaveChanges();
+
                 }
                 else
                 if (choice == "6")
@@ -167,6 +173,12 @@ namespace RhythmsGonnaGetYou
                     Console.WriteLine();
                     Console.WriteLine("Signing a band");
                     Console.WriteLine();
+
+                    Console.WriteLine("What band would you like to sign? ");
+                    var whatBand = Console.ReadLine();
+                    var signBand = context.Band.FirstOrDefault(band => band.Name == whatBand);
+                    signBand.IsSigned = true;
+                    context.SaveChanges();
 
                 }
                 else
