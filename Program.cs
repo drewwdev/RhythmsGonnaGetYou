@@ -6,6 +6,47 @@ namespace RhythmsGonnaGetYou
 {
     class Program
     {
+        static bool PromptForBool(string prompt)
+        {
+            Console.Write(prompt);
+            bool userInput;
+            var isThisGoodInput = bool.TryParse(Console.ReadLine(), out userInput);
+
+            if (isThisGoodInput)
+            {
+                return userInput;
+            }
+            else
+            {
+                Console.WriteLine("Sorry, that was not valid. I'm going to use false as your number.");
+                return false;
+            }
+
+        }
+        static string PromptForString(string prompt)
+        {
+            Console.Write(prompt);
+            var userInput = Console.ReadLine();
+
+            return userInput;
+        }
+        static int PromptForInteger(string prompt)
+        {
+            Console.Write(prompt);
+            int userInput;
+            var isThisGoodInput = Int32.TryParse(Console.ReadLine(), out userInput);
+
+            if (isThisGoodInput)
+            {
+                return userInput;
+            }
+            else
+            {
+                Console.WriteLine("Sorry, that was not valid. I'm going to use 0 as your number.");
+                return 0;
+            }
+        }
+
         static void Main(string[] args)
         {
             var context = new RhythmsGonnaGetYouContext();
@@ -34,6 +75,20 @@ namespace RhythmsGonnaGetYou
                     Console.WriteLine("Adding a new band");
                     Console.WriteLine();
 
+                    var newBand = new Band();
+
+                    newBand.Name = PromptForString("What is the name of the band? ");
+                    newBand.CountryOfOrigin = PromptForString("What country is that band from? ");
+                    newBand.NumberOfMembers = PromptForInteger("How many members does that band have? ");
+                    newBand.Website = PromptForString("What is the name of their website? ");
+                    newBand.Style = PromptForString("What style of music does that band make? ");
+                    newBand.IsSigned = PromptForBool("Is that band signed? True or False only ");
+                    newBand.ContactName = PromptForString("What is the contact name for that band? ");
+                    newBand.ContactPhoneNumber = PromptForString("What is that contact persons phone number? ");
+
+                    context.Band.Add(newBand);
+                    context.SaveChanges();
+
                 }
                 else
                 if (choice == "2")
@@ -47,7 +102,6 @@ namespace RhythmsGonnaGetYou
                     {
                         Console.WriteLine($"There is a band named {band.Name}");
                     }
-
                 }
                 else
                 if (choice == "3")
@@ -114,8 +168,6 @@ namespace RhythmsGonnaGetYou
                     {
                         Console.WriteLine($"{band.Name} is a signed band");
                     }
-
-
                 }
                 else
                 if (choice == "10")
@@ -129,7 +181,6 @@ namespace RhythmsGonnaGetYou
                     {
                         Console.WriteLine($"{band.Name} is an unsigned band");
                     }
-
                 }
                 else
                 if (choice == "11")
