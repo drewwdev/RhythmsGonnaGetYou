@@ -243,6 +243,7 @@ namespace RhythmsGonnaGetYou
         }
 
 
+        // I did not write this. I found it on the internet.
         static string ToTitleCase(string str)
         {
             var tokens = str.Split(new[] { " ", "-" }, StringSplitOptions.RemoveEmptyEntries);
