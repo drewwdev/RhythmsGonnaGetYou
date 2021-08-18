@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,9 +21,22 @@ namespace RhythmsGonnaGetYou
             Console.WriteLine("[8] View all albums ordered by ReleaseDate");
             Console.WriteLine("[9] View all bands that are signed");
             Console.WriteLine("[10] View all bands that are not signed");
-            Console.WriteLine("[11] Quit the program");
+            Console.WriteLine("[11] View all the songs");
+            Console.WriteLine("[12] Quit the program");
         }
+        static string ToTitleCase(string str)
+        {
+            var tokens = str.Split(new[] { " ", "-" }, StringSplitOptions.RemoveEmptyEntries);
+            for (var i = 0; i < tokens.Length; i++)
+            {
+                var token = tokens[i];
+                tokens[i] = token == token.ToUpper()
+                    ? token
+                    : token.Substring(0, 1).ToUpper() + token.Substring(1).ToLower();
+            }
 
+            return string.Join(" ", tokens);
+        }
         static DateTime PromptForDateTime(string prompt)
         {
             Console.Write(prompt);
@@ -57,10 +71,12 @@ namespace RhythmsGonnaGetYou
             }
 
         }
+
         static string PromptForString(string prompt)
         {
             Console.Write(prompt);
             var userInput = Console.ReadLine();
+            ToTitleCase(userInput);
 
             return userInput;
         }
@@ -80,6 +96,7 @@ namespace RhythmsGonnaGetYou
                 return 0;
             }
         }
+
 
         static void Main(string[] args)
         {
@@ -141,7 +158,8 @@ namespace RhythmsGonnaGetYou
                             newAlbum.Title = PromptForString("What is the name of the album? ");
                             newAlbum.IsExplicit = PromptForBool("Is the album explicit? True or False ");
                             newAlbum.ReleaseDate = PromptForDateTime("When was that album released? Format: yyyy-mm-dd ");
-                            newAlbum.BandId = PromptForInteger("What is the band Id associated with this album? ");
+                            var bandNamePrompt = PromptForString("Which band made that album? ");
+                            newAlbum.BandId = context.Band.Where(name => name.Name == bandNamePrompt).Select(band => band.Id).FirstOrDefault();
 
                             context.Album.Add(newAlbum);
                             context.SaveChanges();
@@ -159,7 +177,8 @@ namespace RhythmsGonnaGetYou
                             newSong.Title = PromptForString("What is the title of the song? ");
                             newSong.TrackNumber = PromptForInteger("What is the track number of that song? ");
                             newSong.Duration = PromptForString("What is the duration of that song? Format: mm:ss ");
-                            newSong.AlbumId = PromptForInteger("What is the album Id associated with that song? ");
+                            var albumNamePrompt = PromptForString("Which album is that song on? ");
+                            newSong.AlbumId = context.Album.Where(name => name.Title == albumNamePrompt).Select(album => album.Id).FirstOrDefault();
 
                             context.Song.Add(newSong);
                             context.SaveChanges();
@@ -172,8 +191,7 @@ namespace RhythmsGonnaGetYou
                             Console.WriteLine("Letting a band go");
                             Console.WriteLine();
 
-                            Console.WriteLine("What band would you like to let go? ");
-                            var whatBand = Console.ReadLine();
+                            var whatBand = PromptForString("What band would you like to let go? ");
                             var letGoOfBand = context.Band.FirstOrDefault(band => band.Name == whatBand);
                             letGoOfBand.IsSigned = false;
 
@@ -187,8 +205,7 @@ namespace RhythmsGonnaGetYou
                             Console.WriteLine("Signing a band");
                             Console.WriteLine();
 
-                            Console.WriteLine("What band would you like to sign? ");
-                            var whatBand = Console.ReadLine();
+                            var whatBand = PromptForString("What band would you like to sign? ");
                             var signBand = context.Band.FirstOrDefault(band => band.Name == whatBand);
                             signBand.IsSigned = true;
 
@@ -258,8 +275,22 @@ namespace RhythmsGonnaGetYou
 
                             break;
                         }
-
                     case "11":
+                        {
+                            Console.WriteLine();
+                            Console.WriteLine("Viewing all the songs");
+                            Console.WriteLine();
+
+                            var songNames = context.Song.Include(song => song.Album);
+                            foreach (var song in songNames)
+                            {
+                                Console.WriteLine($"There is a song called {song.Title}");
+                            }
+
+                            break;
+                        }
+
+                    case "12":
                         Console.WriteLine();
                         Console.WriteLine("Goodbye!");
                         keepGoing = false;
